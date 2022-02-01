@@ -45,12 +45,12 @@ const RoomStatus = (props) => {
   const [locationData, setLocationData] = useState({});
   const [loading, setLoading] = useState(true);
   const [sortView, setSortView] = useState(false);
-  console.log("hello world");
+  console.log("hello world #######################", useParams());
   useEffect(() => {
     setLoading(true);
     axios({
       method: "get",
-      url: `${baseUrl}/location/${location_id}/roomStatus`,
+      url: `${baseUrl}/location/${location_id}/room_status`,
     })
       .then((res) => {
         setLocationData(res.data.data);
@@ -61,7 +61,7 @@ const RoomStatus = (props) => {
         setLoading(false);
         console.log("see this is an error from locaiton page --------> ", err);
       });
-  }, []);
+  }, [location_id]);
   if (loading) {
     return (
       <div

@@ -32,11 +32,7 @@ const roomNumberValidation = (input) => {
   return true;
 };
 
-const CreateLocationForm = ({
-  locationActionFunc,
-  initialValueProp,
-  actionType,
-}) => {
+const CreateLocationForm = ({ locationActionFunc, initialValueProp, actionType }) => {
   // const { locationActionFunc, initialValueProp } = props;
   console.log("see this is  =---->", initialValueProp);
   // console.log("loading from block form page--- > ", loading);
@@ -79,7 +75,6 @@ const CreateLocationForm = ({
       <Form.Item
         label="Location Name"
         name="locationName"
-        placeholder="Enter Location name"
         rules={[
           {
             required: true,
@@ -87,12 +82,11 @@ const CreateLocationForm = ({
           },
         ]}
       >
-        <Input placeholder="Enter Locaiton name" />
+        <Input placeholder="Enter Locaiton nameee" />
       </Form.Item>
       <Form.Item
         label="Location Address"
         name="locationAddress"
-        placeholder="Enter Address"
         rules={[
           {
             required: true,
@@ -102,19 +96,18 @@ const CreateLocationForm = ({
       >
         <Input placeholder="Enter address" />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         label="Enter rate"
         name="rate"
-        placeholder="Enter rate"
         rules={[
           {
             required: true,
-            message: "Please enter address!",
+            message: "Please enter rate!",
           },
         ]}
       >
-        <Input placeholder="Enter address" />
-      </Form.Item>
+        <Input placeholder="Enter rate" />
+      </Form.Item> */}
       <Form.Item
         wrapperCol={{
           offset: 8,

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import {
@@ -49,11 +49,8 @@ const Location = () => {
   const [loading, setLoading] = useState(true);
   const [locations, setLocations] = useState([]);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const handleClick = (locationId) =>
-    history.push({
-      pathname: `/location_details/${locationId}`,
-    });
+  const navigate = useNavigate();
+  const handleClick = (locationId) => navigate(`/location_details/${locationId}`);
   useEffect(() => {
     axios({
       method: "get",
@@ -108,11 +105,7 @@ const Location = () => {
                   cursor: "pointer",
                   padding: "0",
                 }}
-                onClick={() =>
-                  history.push({
-                    pathname: `/location/${location.shortid}/roomStatus`,
-                  })
-                }
+                onClick={() => navigate(`/location/${location.shortid}/room_status`)}
                 // onClick={() => handleClick(location.shortid)}
                 title={location.name}
                 extra={

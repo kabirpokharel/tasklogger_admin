@@ -6,28 +6,17 @@ import {
   // useSelector,
   useDispatch,
 } from "react-redux";
-import {
-  // Form,
-  // Input,
-  Button,
-  // Card,
-  Row,
-  Col,
-  // Tag,
-  // Select,
-  Result,
-  Typography,
-} from "antd";
+import { Button, Row, Col, Result, Typography } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import baseUrl from "../../modules/common/constant/baseUrl";
 import { initilizeLocations } from "../../modules/redux/actions";
 import CreateLocationForm from "../../modules/form/locationForm/CreateLocationForm";
-import { roomNumberGenerator } from "./LocationFunction";
+import CreateUserForm from "../../modules/form/userForm/CreateUserForm";
 import CardComponent from "../../modules/common/components/CardComponent";
 
 const { Paragraph, Text, Title } = Typography;
 
-const ResultCard = ({ error, setStatusPopup, navigate }) => {
+const ResultCard = ({ error, setStatusPopup }) => {
   if (error.length) {
     return (
       <Result
@@ -94,53 +83,33 @@ const ResultCard = ({ error, setStatusPopup, navigate }) => {
   //   );
   // }
 };
-const CreateLocation = () => {
+const CreateUser = () => {
   const [statusPopup, setStatusPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const locationActionFunc = (values) => {
+  const submitUserForm = (values) => {
     console.log("11-12 I have reached here to location action!!!");
     setLoading(true);
-    const { locationName, rate, locationAddress } = values;
+    const { firstName, surname, role, dob, email, password } = values;
     console.log("see this is values of create location form", values);
     axios({
       method: "post",
-      url: `${baseUrl}/location/create`,
+      url: `${baseUrl}/signup`,
       data: {
-        name: locationName,
-        rate,
-        address: locationAddress,
+        firstName,
+        surname,
+        role, //["admin", "editor", "user"]
+        dob, //date
+        email,
+        password,
       },
     })
       .then((res) => {
         console.log("see this is response from create Location", res);
         // setLoading(false);
-        axios({
-          method: "get",
-          url: `${baseUrl}/location/viewAll`,
-        })
-          .then((res) => {
-            console.log("see this is response including newly added locaiton", res);
-            const newLocationId = res.data.locations.find(
-              (location) => location.name === locationName
-            ).shortid;
-            navigate(`/location/${newLocationId}/location_detail`);
-            // history.push({
-            //   pathname: `/location_details/${newLocationId}`,
-            // });
-
-            // dispatch(initilizeLocations(res.data.locations));
-            // setLocations(res.data.locations);
-            // setLoading(false);
-          })
-          .catch((err) => {
-            setLoading(false);
-            console.log("see this is an error from locaiton page --------> ", err);
-          });
-        // setStatusPopup(true);
       })
       .catch((err) => {
         setError([...error, err.type]);
@@ -157,7 +126,7 @@ const CreateLocation = () => {
         // style={{ background: "green" }}
       >
         {statusPopup ? (
-          <ResultCard {...{ error, setStatusPopup, navigate }} />
+          <ResultCard {...{ error, setStatusPopup }} />
         ) : (
           <CardComponent
             bordered={false}
@@ -169,10 +138,10 @@ const CreateLocation = () => {
           >
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
               <Title level={4} type="secondary">
-                Create Location
+                Create User
               </Title>
             </div>
-            <CreateLocationForm {...{ locationActionFunc }} />
+            <CreateUserForm {...{ submitUserForm }} />
           </CardComponent>
         )}
       </Col>
@@ -182,4 +151,4 @@ const CreateLocation = () => {
 
 // Block.propTypes = {};
 
-export default CreateLocation;
+export default CreateUser;

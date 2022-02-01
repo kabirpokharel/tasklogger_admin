@@ -1,5 +1,5 @@
 import React from "react";
-import "antd/dist/antd.css";
+import "antd/dist/antd.min.css";
 import "./loginStyle.css";
 import { loginUser } from "../../modules/redux/actions";
 import { Form, Input, Button, Checkbox } from "antd";

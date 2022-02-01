@@ -18,7 +18,7 @@ const CardComponent = (props) => {
 };
 
 CardComponent.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.element,
 };
 
 export default CardComponent;
