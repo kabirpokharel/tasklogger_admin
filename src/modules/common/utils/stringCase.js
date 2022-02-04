@@ -6,6 +6,7 @@ const stringCase = (text, caseType) => {
       return text.toLowerCase();
     case "capitalize":
       const words = text.toLowerCase().split(" ");
+      // console.log("see this is words now --- > ", words);
       const capitalizedTextArray = words.map((w, i) => w.charAt(0).toUpperCase() + w.substr(1));
       return capitalizedTextArray.join(" ");
     default:
@@ -13,4 +14,9 @@ const stringCase = (text, caseType) => {
   }
 };
 
-export default stringCase;
+const formatCamelcase = (text) => {
+  let result = text.replace(/([A-Z])/g, " $1");
+  return result.toLowerCase();
+};
+
+export { stringCase, formatCamelcase };

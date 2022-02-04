@@ -6,8 +6,10 @@ const drawerIcons = (title, color) => {
       return location(color);
     case "billing":
       return billing(color);
-    case "createUser":
+    case "create_user":
       return createUser(color);
+    case "create_location":
+      return createLocation(color);
     case "rtl":
       return rtl(color);
     case "profile":
@@ -37,8 +39,36 @@ const location = (color) => [
     />
   </svg>,
 ];
+const createLocation = (color) => {
+  return [
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      x="0px"
+      y="0px"
+      width="20"
+      height="20"
+      viewBox="0 0 34.398 34.398"
+    >
+      <g>
+        <g id="c28_geolocalization">
+          <path
+            d="M17.202,0C10.749,0,5.515,5.197,5.515,11.607c0,3.281,3.218,9.156,3.218,9.156l8.039,13.635l8.386-13.477
+			c0,0,3.726-5.605,3.726-9.314C28.883,5.197,23.653,0,17.202,0z M17.147,18.002c-3.695,0-6.688-2.994-6.688-6.693
+			c0-3.693,2.993-6.686,6.688-6.686c3.693,0,6.69,2.992,6.69,6.686C23.837,15.008,20.84,18.002,17.147,18.002z"
+            fill={color}
+          />
+          <polygon
+            points="18.539,7.233 15.898,7.233 15.898,10.242 12.823,10.242 12.823,12.887 15.898,12.887 15.898,15.985 
+			18.539,15.985 18.539,12.887 21.576,12.887 21.576,10.242 18.539,10.242 		"
+            fill={color}
+          />
+        </g>
+        <g id="Capa_1_146_"></g>
+      </g>
+    </svg>,
+  ];
+};
 
-// const addLocaiton
 const dashboard = (color) => [
   <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" key={0}>
     <path

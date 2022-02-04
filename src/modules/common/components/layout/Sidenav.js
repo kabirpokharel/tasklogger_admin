@@ -15,8 +15,9 @@ import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../../../asstes/image/logo.png";
 import { drawerIcons } from "../../../../asstes/svg/drawerIcons";
+import CreatePost from "../../../../pages/Post/CreatePost";
 import { BILLING, DASHBOARD, LOCATION, CREATE_LOCATION, CREATE_USER } from "../../constant/page";
-import stringCase from "../../utils/stringCase";
+import { stringCase } from "../../utils/stringCase";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
@@ -119,7 +120,7 @@ function Sidenav({ color }) {
     </svg>,
   ];
 
-  const signin = [
+  const post = [
     <svg
       width="20"
       height="20"
@@ -153,7 +154,7 @@ function Sidenav({ color }) {
       <>
         {sidebarPages.map((p, i) => {
           const route = stringCase(p, "lower");
-          console.log("see this is route and look out for billing- -- --- > ", route);
+          // console.log("see this is route and look out for billing- -- --- > ", route);
           return (
             <Menu.Item key={i + 1}>
               <NavLink to={`/${route}`}>
@@ -198,10 +199,16 @@ function Sidenav({ color }) {
             <span className="label">Profile</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="7">
+        {/* <Menu.Item key="7">
           <NavLink to="/sign-in">
             <span className="icon">{signin}</span>
             <span className="label">Sign In</span>
+          </NavLink>
+        </Menu.Item> */}
+        <Menu.Item key="7">
+          <NavLink to="/create_post">
+            <span className="icon">{post}</span>
+            <span className="label">Post</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="8">

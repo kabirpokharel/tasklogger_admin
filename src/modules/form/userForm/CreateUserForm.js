@@ -5,25 +5,18 @@ import {
   Form,
   Input,
   Button,
+  Radio,
   Typography,
+  DatePicker,
   // Row,
   // Col,
   // Tag,
   // Select,
 } from "antd";
-// import { PlusOutlined } from "@ant-design/icons";
+import { formatCamelcase, stringCase } from "../../common/utils/stringCase";
 
-// const { Option } = Select;
-const formFields = [
-  "firstName",
-  "surname",
-  "role", //["admin", "editor", "user"]
-  "dob", //date
-  "email",
-  "password",
-];
-const CreateUserForm = ({ locationActionFunc, initialValueProp, actionType }) => {
-  // const { locationActionFunc, initialValueProp } = props;
+const CreateUserForm = ({ submitUserForm, initialValueProp, actionType }) => {
+  // const { submitUserForm, initialValueProp } = props;
   console.log("see this is  =---->", initialValueProp);
   // console.log("loading from block form page--- > ", loading);
   // console.log("this is ref --- > ", ref);
@@ -49,16 +42,19 @@ const CreateUserForm = ({ locationActionFunc, initialValueProp, actionType }) =>
     <Form
       name="createUserForm"
       initialValues={{
-        firstName: initialValueProp.firstName,
-        surname: initialValueProp.surname,
-        role: initialValueProp.role, //["admin", "editor", "user"]
+        // firstName: initialValueProp.firstName,
+        // surname: initialValueProp.surname,
+        // role: initialValueProp.role, //["admin", "editor", "user"]
+        // dob: initialValueProp.dob, //date
+        // email: initialValueProp.email,
+        // password: initialValueProp.password,
+        // ###################################################### V
+        firstName: "",
+        surname: "",
+        role: "admin", //["admin", "editor", "user"]
         dob: initialValueProp.dob, //date
-        email: initialValueProp.email,
-        password: initialValueProp.password,
-
-        // locationName: initialValueProp.name,
-        // locationAddress: initialValueProp.location,
-        // rate: initialValueProp.rate,
+        email: "kabirpokharel12@gmail.com",
+        password: "admin123",
       }}
       labelCol={{
         span: 8,
@@ -66,23 +62,115 @@ const CreateUserForm = ({ locationActionFunc, initialValueProp, actionType }) =>
       wrapperCol={{
         span: 16,
       }}
-      onFinish={locationActionFunc}
+      onFinish={submitUserForm}
       onFinishFailed={onFinishFailed}
     >
-      {formFields.map((field, id) => (
-        <Form.Item
-          label={field === "dob" ? "Date of birth" : field}
-          name={field}
-          rules={[
-            {
-              required: true,
-              message: `Please enter ${field}!`,
+      {["firstName", "surname"].map((field, id) => {
+        const formattedLabel = formatCamelcase(field);
+        const labelTitle = stringCase(formattedLabel, "capitalize");
+        return (
+          <Form.Item
+            label={labelTitle}
+            name={field}
+            key={id + field}
+            rules={[
+              {
+                required: true,
+                message: `Please enter ${formattedLabel}!`,
+              },
+            ]}
+          >
+            <Input placeholder={`Enter ${formattedLabel}`} />
+          </Form.Item>
+        );
+      })}
+      <Form.Item
+        label={"Role"}
+        name={"role"}
+        rules={[
+          {
+            required: true,
+            message: "Please enter user role!",
+          },
+        ]}
+      >
+        <Radio.Group>
+          <Radio value="admin">Admin</Radio>
+          <Radio value="editor">Editor</Radio>
+          <Radio value="user">User</Radio>
+        </Radio.Group>
+      </Form.Item>
+      <Form.Item
+        label={"Date of Birth"}
+        name={"dob"}
+        rules={[
+          {
+            required: true,
+            message: `Please enter Date of Birth!`,
+          },
+        ]}
+      >
+        <DatePicker placeholder={"Enter DOB"} />
+      </Form.Item>
+      <Form.Item
+        name={"email"}
+        label="Email"
+        rules={[
+          {
+            type: "email",
+            message: "The input is not valid E-mail!",
+          },
+          {
+            required: true,
+            message: "Please input your E-mail!",
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        type="password"
+        name="password"
+        label="Password"
+        rules={[
+          {
+            required: true,
+            message: "Please input your password!",
+          },
+        ]}
+        // hasFeedback
+      >
+        <Input.Password
+          style={{ border: "1px solid #d9d9d9", borderRadius: "6px", padding: "0 10px" }}
+        />
+      </Form.Item>
+
+      <Form.Item
+        name="confirm"
+        label="Confirm Password"
+        dependencies={["password"]}
+        // hasFeedback
+        rules={[
+          {
+            required: true,
+            message: "Please confirm your password!",
+          },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue("password") === value) {
+                return Promise.resolve();
+              }
+
+              return Promise.reject(new Error("The two passwords that you entered do not match!"));
             },
-          ]}
-        >
-          <Input placeholder={`Enter ${field}`} />
-        </Form.Item>
-      ))}
+          }),
+        ]}
+      >
+        <Input.Password
+          style={{ border: "1px solid #d9d9d9", borderRadius: "6px", padding: "0 10px" }}
+        />
+      </Form.Item>
+
       <Form.Item
         wrapperCol={{
           offset: 8,
@@ -98,7 +186,7 @@ const CreateUserForm = ({ locationActionFunc, initialValueProp, actionType }) =>
 };
 
 CreateUserForm.propTypes = {
-  locationActionFunc: PropTypes.func,
+  submitUserForm: PropTypes.func,
   initialValueProp: PropTypes.object,
 };
 CreateUserForm.defaultProps = {

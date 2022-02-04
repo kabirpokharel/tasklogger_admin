@@ -6,13 +6,14 @@ import {
   // useSelector,
   useDispatch,
 } from "react-redux";
-import { Button, Row, Col, Result, Typography } from "antd";
+import { Button, Row, Col, Result, Typography, Card } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import baseUrl from "../../modules/common/constant/baseUrl";
 import { initilizeLocations } from "../../modules/redux/actions";
 import CreateLocationForm from "../../modules/form/locationForm/CreateLocationForm";
 import CreateUserForm from "../../modules/form/userForm/CreateUserForm";
 import CardComponent from "../../modules/common/components/CardComponent";
+import CreatePostForm from "../../modules/form/post/createPostForm";
 
 const { Paragraph, Text, Title } = Typography;
 const ResultCard = ({ error }) => {
@@ -96,12 +97,12 @@ const ResultCard = ({ error }) => {
     );
   }
 };
-const CreateUser = () => {
+const CreatePost = () => {
   const [statusPopup, setStatusPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
 
-  const submitUserForm = (values) => {
+  const submitPostForm = (values) => {
     console.log("11-12 I have reached here to location action!!!");
     setLoading(true);
     const { firstName, surname, role, dob, email, password } = values;
@@ -143,21 +144,33 @@ const CreateUser = () => {
         {statusPopup ? (
           <ResultCard error={error} setStatusPopup={setStatusPopup} />
         ) : (
-          <CardComponent
-            bordered={false}
-            loading={loading}
-            bodyStyle={{
-              paddingTop: "20px",
-              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            }}
-          >
-            <div style={{ textAlign: "center", marginBottom: "20px" }}>
-              <Title level={4} type="secondary">
-                Create User
-              </Title>
-            </div>
-            <CreateUserForm {...{ submitUserForm }} />
-          </CardComponent>
+          // <CardComponent
+          //   bordered={false}
+          //   loading={loading}
+          //   bodyStyle={{
+          //     paddingTop: "20px",
+          //     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+          //   }}
+          // >
+          //   <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          //     <Title level={4} type="secondary">
+          //       Create Post
+          //     </Title>
+          //   </div>
+          //   <CreatePostForm {...{ submitPostForm }} />
+          // </CardComponent>
+          <Row gutter={[24, 0]}>
+            <Col xs={24} sm={24} md={12} lg={12} xl={14} className="mb-24">
+              <Card bordered={false} className="criclebox h-full">
+                <CreatePostForm {...{ submitPostForm }} />
+              </Card>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
+              <Card bordered={false} className="criclebox h-full">
+                {/* <LineChart /> */}
+              </Card>
+            </Col>
+          </Row>
         )}
       </Col>
     </Row>
@@ -166,4 +179,4 @@ const CreateUser = () => {
 
 // Block.propTypes = {};
 
-export default CreateUser;
+export default CreatePost;

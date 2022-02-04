@@ -1913,7 +1913,7 @@ body {
   border-radius: 6px;
 }
 .ant-input {
-  font-weight: 600;
+  /* font-weight: 600; */
   color: #8c8c8c;
 }
 .ant-input {

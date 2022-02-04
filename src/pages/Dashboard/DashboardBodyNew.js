@@ -289,7 +289,6 @@ const DashboardBodyNew = () => {
             </Row>
           </Card>
         </Col>
-
         <Col xs={24} md={12} sm={24} lg={12} xl={10} className="mb-24">
           <Card bordered={false} className="criclebox card-info-2 h-full">
             <div className="gradent h-full col-content">

@@ -8,19 +8,21 @@ import RoomStatus from "../Room/RoomStatus";
 import DashboardBodyNew from "./DashboardBodyNew";
 import CreateUser from "../User/CreateUser";
 import Main from "../../modules/common/components/layout/Main";
+import CreatePost from "../Post/CreatePost";
 
 const Dashboard = () => {
   return (
     <BrowserRouter>
       <Main>
         <Routes>
-          <Route path="/" element={<DashboardBodyNew />} />
           <Route path="/dashboard" element={<DashboardBodyNew />} />
+          <Route path="/" element={<DashboardBodyNew />} />
           <Route path="/location" element={<Location />} />
           <Route path="/location/:location_id/location_detail" element={<LocationDetails />} />
           <Route path="/location/:location_id/room_status" element={<RoomStatus />} />
           <Route path="/create_location" element={<CreateLocation />} />
           <Route path="/create_user" element={<CreateUser />} />
+          <Route path="/create_post" element={<CreatePost />} />
           {/* <Route path="/block" element={<Block />} /> */}
         </Routes>
       </Main>
