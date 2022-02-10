@@ -2,10 +2,7 @@ import React, { useState } from "react";
 // import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {
-  // useSelector,
-  useDispatch,
-} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   // Form,
   // Input,
@@ -20,9 +17,9 @@ import {
 } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import baseUrl from "../../modules/common/constant/baseUrl";
-import { initilizeLocations } from "../../modules/redux/actions";
+// import { initilizeLocations } from "../../modules/redux/actions";
 import CreateLocationForm from "../../modules/form/locationForm/CreateLocationForm";
-import { roomNumberGenerator } from "./LocationFunction";
+// import { roomNumberGenerator } from "./LocationFunction";
 import CardComponent from "../../modules/common/components/CardComponent";
 
 const { Paragraph, Text, Title } = Typography;
@@ -100,6 +97,8 @@ const CreateLocation = () => {
   const [error, setError] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
 
   const locationActionFunc = (values) => {
     console.log("11-12 I have reached here to location action!!!");
@@ -108,6 +107,7 @@ const CreateLocation = () => {
     console.log("see this is values of create location form", values);
     axios({
       method: "post",
+      headers: { user: user.shortid },
       url: `${baseUrl}/location/create`,
       data: {
         name: locationName,
@@ -120,6 +120,7 @@ const CreateLocation = () => {
         // setLoading(false);
         axios({
           method: "get",
+
           url: `${baseUrl}/location/viewAll`,
         })
           .then((res) => {

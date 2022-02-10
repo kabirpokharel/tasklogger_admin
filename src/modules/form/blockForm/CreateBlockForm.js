@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { Form, Input, Button, Row, Col, Tag, Select } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import CardComponent from "../../common/components/CardComponent";
+import { useEffect } from "react";
+import { numberToRange } from "../../../pages/block/blockFunciton";
 
 const { Option } = Select;
 
@@ -24,29 +26,30 @@ const roomNumberValidation = (input) => {
 };
 
 const CreateBlockForm = (props) => {
-  const { createBlock, loading } = props;
-  // console.log("loading from block form page--- > ", loading);
-  // console.log("this is ref --- > ", ref);
-  // const [form] = Form.useForm();
-
-  // useImperativeHandle(ref, () => ({
-  //   resetBlockForm() {
-  //     form.resetFields();
-  //     alert("Child function called");
-  //   },
-  // }));
-
-  // // useImperativeHandle(ref, () => {
-  // //   console.log("triggered from parent element");
-  // //   const resetForm = () => form.resetFields();
-  // // });
-
+  const { createBlock, loading, blockOperation, currentBlock } = props;
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
+  const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (blockOperation === "edit") {
+      form.setFieldsValue({
+        blockName: currentBlock?.name || "",
+        blockRooms: currentBlock?.rooms && numberToRange(currentBlock.rooms),
+        extras: currentBlock?.extras || [],
+      });
+    } else {
+      form.setFieldsValue({
+        blockName: "",
+        blockRooms: "",
+        extras: [],
+      });
+    }
+  }, [currentBlock, form, blockOperation]);
   return (
     <Form
+      form={form}
       name="blockForm"
       labelCol={{
         span: 8,
@@ -54,9 +57,13 @@ const CreateBlockForm = (props) => {
       wrapperCol={{
         span: 16,
       }}
-      initialValues={{
-        remember: true,
-      }}
+      // initialValues={
+      //   {
+      //     // // blockName: currentBlock?.name || "",
+      //     // blockRooms: currentBlock?.rooms || [],
+      //     // extras: currentBlock?.extras || [],
+      //   }
+      // }
       onFinish={createBlock}
       onFinishFailed={onFinishFailed}
     >
@@ -86,9 +93,7 @@ const CreateBlockForm = (props) => {
               if (roomNumberValidation(value)) {
                 return Promise.resolve();
               } else {
-                return Promise.reject(
-                  new Error("Please enter the room number as per suggestion")
-                );
+                return Promise.reject(new Error("Please enter the room number as per suggestion"));
               }
             },
           },
@@ -123,9 +128,18 @@ const CreateBlockForm = (props) => {
           span: 16,
         }}
       >
-        <Button loading={loading} type="primary" htmlType="submit">
-          Create Block
-        </Button>
+        <Row>
+          <Col span={4}>
+            <Button loading={loading} type="primary" htmlType="submit">
+              {blockOperation === "edit" ? "Edit" : "Add"}
+            </Button>
+          </Col>
+          <Col offset={4} span={4}>
+            <Button loading={loading} onClick={() => form.resetFields()} danger>
+              Delete
+            </Button>
+          </Col>
+        </Row>
       </Form.Item>
     </Form>
   );

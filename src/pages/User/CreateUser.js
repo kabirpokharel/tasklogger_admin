@@ -17,20 +17,16 @@ import CardComponent from "../../modules/common/components/CardComponent";
 const { Paragraph, Text, Title } = Typography;
 const ResultCard = ({ error }) => {
   // let navigate = useNavigate();
-  console.log("this is type of the error ", typeof error);
-  console.log("this is type of the error ", error);
+  console.log("typeof error --- ->", typeof error);
+  console.log("error -- --> ", error);
+
   // console.log(
   //   "see this is an error for result card   error[0].response.message -- -- > ",
   //   error[0].response.message
   // );
-  console.log(
-    "see this is an error for result card   error[0].response.status -- -- > ",
-    error[0].response?.status || "error[0].response.status --> undefined"
-  );
-  console.log(
-    "see this is an error for result card  error[0].response.data -- -- > ",
-    error[0].response?.data || "error[0].response?.data == => undefined"
-  );
+  // console.log("error[0].response.body -- -- > ", error[0].response?.body);
+  // console.log("error[0].response.data -- -- > ", error[0].response?.data);
+  // console.log("error[0].Error -- -- > ", error[0]["Error"]);
   if (error.length) {
     return (
       <Result
@@ -124,9 +120,9 @@ const CreateUser = () => {
         setStatusPopup(true);
       })
       .catch((err) => {
-        // console.log("this is error from err -- --- > ", err);
-        // console.log("this is error from err.response -- --- > ", error.response);
-        // console.log("this is error from err.response.data -- --- > ", error.response.data);
+        console.log("error.response.data ---- --- -->", err.response?.data);
+        console.log("error.response.status ---- --- -->", err.response?.status);
+        console.log("error.response.headers ---- --- -->", err.response?.headers);
         setError([...error, err]);
         setLoading(false);
         setStatusPopup(true);

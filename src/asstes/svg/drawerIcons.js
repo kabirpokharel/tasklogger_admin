@@ -4,7 +4,7 @@ const drawerIcons = (title, color) => {
       return dashboard(color);
     case "location":
       return location(color);
-    case "billing":
+    case "view_tasklog":
       return billing(color);
     case "create_user":
       return createUser(color);

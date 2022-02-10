@@ -4,7 +4,6 @@ import "./loginStyle.css";
 import { loginUser } from "../../modules/redux/actions";
 import { Form, Input, Button, Checkbox } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 const LoginPage = () => {
@@ -55,9 +54,9 @@ const LoginPage = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
+          {/* <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
-          </Form.Item>
+          </Form.Item> */}
 
           <a className="login-form-forgot" href="">
             Forgot password
@@ -73,7 +72,7 @@ const LoginPage = () => {
           >
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          {/* Or <a href="">register now!</a> */}
         </Form.Item>
       </Form>
     </div>

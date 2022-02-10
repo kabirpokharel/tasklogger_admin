@@ -30,7 +30,6 @@ function Footer() {
         <Col xs={24} md={12} lg={12}>
           <div className="footer-menu">
             <ul>
-              Footer right here!!!
               {/* <li className="nav-item">
                 <a href="#pablo" className="nav-link text-muted" target="_blank">
                   Creative Tim

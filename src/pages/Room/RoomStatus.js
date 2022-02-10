@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import baseUrl from "../../modules/common/constant/baseUrl";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../modules/common/components/Loader";
 import { Card, Col, Divider, Row, Typography, Switch } from "antd";
 import { roomStatusStyle, sortRooms } from "./roomStatusFunc";
@@ -46,11 +47,15 @@ const RoomStatus = (props) => {
   const [loading, setLoading] = useState(true);
   const [sortView, setSortView] = useState(false);
   console.log("hello world #######################", useParams());
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+
   useEffect(() => {
     setLoading(true);
     axios({
       method: "get",
-      url: `${baseUrl}/location/${location_id}/room_status`,
+      headers: { user: user.shortid },
+      url: `${baseUrl}/location/${location_id}/roomStatus`,
     })
       .then((res) => {
         setLocationData(res.data.data);

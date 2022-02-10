@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import PropTypes from "prop-types";
 import axios from "axios";
-import {
-  // useSelector,
-  useDispatch,
-} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   // Card,
   Col,
@@ -26,9 +23,13 @@ const Block = () => {
   const [loading, setLoading] = useState(true);
   const [locations, setLocations] = useState(["a"]);
   const dispatch = useDispatch();
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+
   useEffect(() => {
     axios({
       method: "get",
+      headers: { user: user.shortid },
       url: `${baseUrl}/location/viewAll`,
     })
       .then((res) => {

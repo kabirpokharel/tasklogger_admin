@@ -1,18 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import {
-  Form,
-  Input,
-  Button,
-  Card,
-  Row,
-  Col,
-  Tag,
-  Select,
-  Result,
-  Typography,
-} from "antd";
+import { Form, Input, Button, Card, Row, Col, Tag, Select, Result, Typography } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import CreateBlockForm from "../../modules/form/blockForm/CreateBlockForm";
 import baseUrl from "../../modules/common/constant/baseUrl";
@@ -25,6 +14,7 @@ const ResultCard = ({
   setStatusPopup,
   setModalVisible_createBlock,
   loading,
+  blockOperation,
 }) => {
   if (error.length) {
     return (
@@ -67,7 +57,9 @@ const ResultCard = ({
     return (
       <Result
         status="success"
-        title="Created Block Successfully!"
+        title={
+          blockOperation === "create" ? "Created Block Successfully" : "Edited Block Successfully"
+        }
         subTitle="Click on 'Add Block' to add new block to location"
         extra={[
           <Button
@@ -83,9 +75,9 @@ const ResultCard = ({
           <Button
             key="buy"
             onClick={() => {
-              // setStatusPopup(false);
-              // setModalVisible_createBlock(false);
-              window.location.reload();
+              setStatusPopup(false);
+              setModalVisible_createBlock(false);
+              // window.location.reload();
             }}
           >
             Done
@@ -96,12 +88,16 @@ const ResultCard = ({
   }
 };
 const Block = ({
+  loading,
+  windowLoaderFunc,
+  blockOperation, //check if it is "create" or "edit"
+  currentBlock,
+  setCurrentBlock,
   setCreateBlock_Loading,
   location_id,
   setModalVisible_createBlock,
-  windowLoaderFunc,
-  loading,
 }) => {
+  console.log("see this is current Block as props - --- - > ", currentBlock);
   const [statusPopup, setStatusPopup] = useState(false);
   // const [loading, setCreateBlock_Loding] = useState(false);
   const [error, setError] = useState([]);
@@ -109,15 +105,25 @@ const Block = ({
     setCreateBlock_Loading(true);
     const { blockName, blockRooms, extras } = values;
     console.log("see this is values", values);
-    axios({
-      method: "post",
-      url: `${baseUrl}/block/create`,
-      data: {
+    let data = {
+      name: blockName,
+      rooms: roomNumberGenerator(blockRooms),
+      extras: extras,
+      location: location_id,
+    };
+    if (blockOperation !== "create") {
+      data = {
         name: blockName,
         rooms: roomNumberGenerator(blockRooms),
         extras: extras,
-        location: location_id,
-      },
+        blockId: currentBlock.shortid,
+      };
+    }
+    console.log("see this is data before updating or creating block");
+    axios({
+      method: "post",
+      url: blockOperation === "create" ? `${baseUrl}/block/create` : `${baseUrl}/block/update`,
+      data,
     })
       .then((response) => {
         console.log("see this is response from createBlock", response);
@@ -133,12 +139,7 @@ const Block = ({
   };
   return (
     <Row>
-      <Col
-        span={24}
-        // xs={{ span: 24 }}
-        // lg={{ span: 18 }}
-        // style={{ background: "green" }}
-      >
+      <Col span={24}>
         {statusPopup ? (
           <ResultCard
             {...{
@@ -146,19 +147,11 @@ const Block = ({
               setStatusPopup,
               setModalVisible_createBlock,
               windowLoaderFunc,
+              blockOperation,
             }}
           />
         ) : (
-          // <CardComponent
-          //   loading={loading}
-          //   style={{
-          //     border: "none",
-          //     paddingTop: "20px",
-          //     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-          //   }}
-          // >
-          <CreateBlockForm {...{ createBlock, loading }} />
-          // </CardComponent>
+          <CreateBlockForm {...{ createBlock, loading, blockOperation, currentBlock }} />
         )}
       </Col>
     </Row>

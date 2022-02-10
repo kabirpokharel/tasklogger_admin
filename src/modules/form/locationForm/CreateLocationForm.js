@@ -5,7 +5,7 @@ import {
   Form,
   Input,
   Button,
-  Typography,
+  // Typography,
   // Row,
   // Col,
   // Tag,
@@ -15,22 +15,22 @@ import {
 
 // const { Option } = Select;
 
-const isNumeric = (input) => !isNaN(input) && !!input; // you may also check if the value is a nonzero positive integer
-const isOrdered = (start, end) => parseInt(start) < parseInt(end);
-const isRangeValid = (range) =>
-  range.length == 2 && range.every(isNumeric) && isOrdered(range[0], range[1]);
-const isSingleValid = (single) => single.length == 1 && isNumeric(single[0]);
+// const isNumeric = (input) => !isNaN(input) && !!input; // you may also check if the value is a nonzero positive integer
+// const isOrdered = (start, end) => parseInt(start) < parseInt(end);
+// const isRangeValid = (range) =>
+//   range.length == 2 && range.every(isNumeric) && isOrdered(range[0], range[1]);
+// const isSingleValid = (single) => single.length == 1 && isNumeric(single[0]);
 
-const roomNumberValidation = (input) => {
-  const inputs = input.split(",").map((x) => x.trim());
-  for (const x of inputs) {
-    if (!x) return false;
-    const pages = x.split("-");
-    if (!isSingleValid(pages) && !isRangeValid(pages)) return false;
-  }
+// const roomNumberValidation = (input) => {
+//   const inputs = input.split(",").map((x) => x.trim());
+//   for (const x of inputs) {
+//     if (!x) return false;
+//     const pages = x.split("-");
+//     if (!isSingleValid(pages) && !isRangeValid(pages)) return false;
+//   }
 
-  return true;
-};
+//   return true;
+// };
 
 const CreateLocationForm = ({ locationActionFunc, initialValueProp, actionType }) => {
   // const { locationActionFunc, initialValueProp } = props;

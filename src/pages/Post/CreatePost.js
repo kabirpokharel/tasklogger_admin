@@ -71,16 +71,16 @@ const ResultCard = ({ error }) => {
     return (
       <Result
         status="success"
-        title="Successfully created a new user!"
-        subTitle="Please talley the details of new user."
+        title="Posted!!"
+        subTitle="You have successfully created the post"
         extra={[
           <Button
             type="primary"
             key="console"
             onClick={() => {
+              alert("redirect to post page");
               // setStatusPopup(false);
-
-              window.location.reload(false);
+              // window.location.reload(false);
               // navigate(`/location/${locationId}/location_detail`);
               // history.push({
               //   pathname: `/location_details/${locationId}`,
@@ -168,6 +168,7 @@ const CreatePost = () => {
             <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
               <Card bordered={false} className="criclebox h-full">
                 {/* <LineChart /> */}
+                <iframe src="http://expo.dev/notifications"></iframe>
               </Card>
             </Col>
           </Row>

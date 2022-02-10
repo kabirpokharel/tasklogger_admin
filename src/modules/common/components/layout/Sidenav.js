@@ -13,13 +13,25 @@
 // import { useState } from "react";
 import { Menu, Button } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../../asstes/image/logo.png";
+import { useSelector, useDispatch } from "react-redux";
 import { drawerIcons } from "../../../../asstes/svg/drawerIcons";
 import CreatePost from "../../../../pages/Post/CreatePost";
-import { BILLING, DASHBOARD, LOCATION, CREATE_LOCATION, CREATE_USER } from "../../constant/page";
+import {
+  BILLING,
+  DASHBOARD,
+  LOCATION,
+  CREATE_LOCATION,
+  CREATE_USER,
+  VIEW_TASKLOG,
+} from "../../constant/page";
 import { stringCase } from "../../utils/stringCase";
+import { logoutUser } from "../../../redux/actions";
 
 function Sidenav({ color }) {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const { pathname } = useLocation();
   const page = pathname.replace("/", "") || "dashboard";
   const dashboard = [
@@ -148,7 +160,7 @@ function Sidenav({ color }) {
       <path d="M2,0A2,2,0,0,0,0,2V8a2,2,0,0,0,2,2V4A2,2,0,0,1,4,2h6A2,2,0,0,0,8,0Z" fill={color} />
     </svg>,
   ];
-  const sidebarPages = [DASHBOARD, LOCATION, BILLING, CREATE_LOCATION, CREATE_USER];
+  const sidebarPages = [DASHBOARD, LOCATION, VIEW_TASKLOG, CREATE_LOCATION, CREATE_USER];
   const NavigationItems = () => {
     return (
       <>
@@ -211,12 +223,32 @@ function Sidenav({ color }) {
             <span className="label">Post</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="8">
+        <li
+          class="ant-menu-item ant-menu-item-only-child"
+          // role="menuitem"
+          // tabindex="-1"
+          // data-menu-id="rc-menu-uuid-61561-1-8"
+          style={{ paddingLeft: "24px" }}
+          onClick={() => {
+            dispatch(logoutUser());
+            navigate("/");
+          }}
+        >
+          <span class="ant-menu-title-content">
+            <a>
+              <span class="icon">{signup}</span>
+              <span class="label">Logo out</span>
+            </a>
+          </span>
+        </li>
+
+        {/* .............................................. */}
+        {/* <Menu.Item key="8">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
-            <span className="label">Sign Up</span>
+            <span className="label">Logo out</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       <div className="aside-footer">
         <div

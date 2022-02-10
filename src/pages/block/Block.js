@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import PropTypes from "prop-types";
 import axios from "axios";
-import {
-  // useSelector,
-  useDispatch,
-} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   // Card,
   Col,
@@ -13,6 +10,7 @@ import {
   Typography,
 } from "antd";
 import baseUrl from "../../modules/common/constant/baseUrl";
+
 import { initilizeLocations } from "../../modules/redux/actions";
 import Loader from "../../modules/common/components/Loader";
 import CardComponent from "../../modules/common/components/CardComponent";
@@ -24,11 +22,15 @@ const {
 
 const Block = () => {
   const [loading, setLoading] = useState(true);
-  const [locations, setLocations] = useState(["a"]);
+  const [locations, setLocations] = useState([]);
   const dispatch = useDispatch();
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+
   useEffect(() => {
     axios({
       method: "get",
+      headers: { user: user.shortid },
       url: `${baseUrl}/location/viewAll`,
     })
       .then((res) => {

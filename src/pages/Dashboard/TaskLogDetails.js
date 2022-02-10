@@ -4,6 +4,7 @@ import axios from "axios";
 import styled from "styled-components";
 import baseUrl from "../../modules/common/constant/baseUrl";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../modules/common/components/Loader";
 import { loginUser } from "../../modules/redux/actions";
 import { Card, Col, Divider, Row, Typography, Switch } from "antd";
@@ -42,32 +43,39 @@ const DispalyRooms = ({ rooms, sortView }) => {
   });
   return roomComponent;
 };
-const DashBoardBody = (props) => {
+const TaskLogDetails = (props) => {
   // let { location_id } = useParams();
   const [taskLogData, setTaskLogData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortView, setSortView] = useState(false);
 
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+  console.log("see this is user details %%%%%%%%%%%%%%%", user);
   useEffect(() => {
     setLoading(true);
     // ***********************dummy data S
     setTaskLogData(taskLogDataFromServer);
-    setLoading(false);
+    // setLoading(false);
     // ***********************dummy data E
 
-    // axios({
-    //   method: "get",
-    //   url: `${baseUrl}/tasklog/viewAll?startTime=2021-08-24T03:59:19.295Z&endTime=2021-08-30T03:59:19.295Z`,
-    // })
-    //   .then((res) => {
-    //     setTaskLogData(res.data.taskLogDetails);
-    //     console.log("res.data.data -- -->", res.data);
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setLoading(false);
-    //     console.log("see this is an error from locaiton page --------> ", err);
-    //   });
+    axios({
+      method: "get",
+      headers: { user: user.shortid },
+      url: `${baseUrl}/tasklog/viewAll?startTime=2021-08-24T03:59:19.295Z&endTime=2021-09-30T03:59:19.295Z`,
+    })
+      .then((res) => {
+        // setTaskLogData(res.data.taskLogDetails);
+        console.log(
+          `${baseUrl}/tasklog/viewAll?startTime=2021-08-24T03:59:19.295Z&endTime=2021-09-30T03:59:19.295Z`,
+          res
+        );
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log("see this is an error from locaiton page --------> ", err);
+      });
   }, []);
   if (loading) {
     return (
@@ -207,9 +215,9 @@ const DashBoardBody = (props) => {
   );
 };
 
-DashBoardBody.propTypes = {};
+TaskLogDetails.propTypes = {};
 
-export default DashBoardBody;
+export default TaskLogDetails;
 
 const taskLogDataFromServer = [
   {

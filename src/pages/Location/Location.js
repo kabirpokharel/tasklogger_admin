@@ -3,10 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
-import {
-  // useSelector,
-  useDispatch,
-} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   // Card,
   Col,
@@ -45,15 +42,19 @@ const SettingIconWrapper = styled.div`
   }
 `;
 
-const Location = () => {
+const Locations = () => {
   const [loading, setLoading] = useState(true);
   const [locations, setLocations] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleClick = (locationId) => navigate(`/location_details/${locationId}`);
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+  // const handleClick = (locationId) => navigate(`/location_details/${locationId}`);
+  const handleClick = (locationId) => navigate(`/location/${locationId}/location_detail`);
   useEffect(() => {
     axios({
       method: "get",
+      headers: { user: user.shortid },
       url: `${baseUrl}/location/viewAll`,
     })
       .then((res) => {
@@ -85,7 +86,7 @@ const Location = () => {
   }
   if (!locations.length) {
     console.log("see this is locations state", locations);
-    return <div>Create location</div>;
+    return <div>No location found, create location first!!!</div>;
   }
   return (
     <div>
@@ -121,7 +122,8 @@ const Location = () => {
                 bordered={false}
               >
                 <LocationCardBodyWrapper>
-                  <Text>Address: 7 Spence Ave, Myrtle Bank SA 5064</Text>
+                  {/* <Text>Address: 7 Spence Ave, Myrtle Bank SA 5064</Text> */}
+                  <Text>{`Address: ${location.address}`}</Text>
                   <p />
                   <Text>
                     No. of blocks: <Tag color="blue">{location.noOfBlocks}</Tag>
@@ -136,6 +138,6 @@ const Location = () => {
   );
 };
 
-// Location.propTypes = {};
+// Locations.propTypes = {};
 
-export default Location;
+export default Locations;

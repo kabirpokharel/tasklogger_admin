@@ -1,8 +1,9 @@
 const initialState = {
   blocks: [],
   locations: [],
-  drawerOpen: false,
   userLoggedIn: false,
+  user: {},
+  allUsers: [],
 };
 
 const cleanerReducer = (state = initialState, action) => {
@@ -12,7 +13,10 @@ const cleanerReducer = (state = initialState, action) => {
       return { ...state, locations: payload };
     }
     case "LOGIN_USER": {
-      return { ...state, userLoggedIn: true };
+      return { ...state, userLoggedIn: true, user: payload };
+    }
+    case "LOGOUT_USER": {
+      return { ...initialState };
     }
     default:
       return state;

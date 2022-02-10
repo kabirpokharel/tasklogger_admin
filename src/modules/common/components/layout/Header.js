@@ -28,7 +28,7 @@ import {
 } from "antd";
 
 import { SearchOutlined, StarOutlined, TwitterOutlined, FacebookFilled } from "@ant-design/icons";
-
+import { useSelector, useDispatch } from "react-redux";
 import { NavLink, Link } from "react-router-dom";
 import styled from "styled-components";
 import avtar from "../../../../asstes/images/team-2.jpg";
@@ -251,13 +251,16 @@ function Header({
   const showDrawer = () => setVisible(true);
   const hideDrawer = () => setVisible(false);
 
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+
   console.log("see this is placement in header component -- --- -- > ", placement);
 
   return (
     <>
-      <div className="setting-drwer" onClick={showDrawer}>
+      {/* <div className="setting-drwer" onClick={showDrawer}>
         {setting}
-      </div>
+      </div> */}
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
           {/* <Breadcrumb>
@@ -383,7 +386,7 @@ function Header({
           </Drawer>
           <Link to="/" className="btn-sign-in">
             {profile}
-            <span>admin_1@acss.com</span>
+            <span> {user.email}</span>
           </Link>
           {/* <Input className="header-search" placeholder="Type here..." prefix={<SearchOutlined />} /> */}
         </Col>

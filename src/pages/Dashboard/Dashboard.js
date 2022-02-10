@@ -9,6 +9,7 @@ import DashboardBodyNew from "./DashboardBodyNew";
 import CreateUser from "../User/CreateUser";
 import Main from "../../modules/common/components/layout/Main";
 import CreatePost from "../Post/CreatePost";
+import TaskLogDetails from "./TaskLogDetails";
 
 const Dashboard = () => {
   return (
@@ -20,6 +21,7 @@ const Dashboard = () => {
           <Route path="/location" element={<Location />} />
           <Route path="/location/:location_id/location_detail" element={<LocationDetails />} />
           <Route path="/location/:location_id/room_status" element={<RoomStatus />} />
+          <Route path="/view_tasklog" element={<TaskLogDetails />} />
           <Route path="/create_location" element={<CreateLocation />} />
           <Route path="/create_user" element={<CreateUser />} />
           <Route path="/create_post" element={<CreatePost />} />

@@ -1,23 +1,23 @@
-import { CREATE_LOCATION, CREATE_BLOCK, INITILIZE_LOCATIONS, LOGIN_USER } from "./actionConst";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { INITILIZE_LOCATIONS, LOGIN_USER, LOGOUT_USER } from "./actionConst";
 
-export const loginUser = () => {
-  console.log("I am at login user action creator");
+const loginUser = (userDetails) => {
   return {
     type: LOGIN_USER,
+    payload: userDetails,
   };
 };
 
-export const createLocaiton = () => ({
-  type: CREATE_LOCATION,
-  payload: null,
-});
+const logoutUser = () => {
+  return {
+    type: LOGOUT_USER,
+  };
+};
 
-export const createBlock = () => ({
-  type: CREATE_BLOCK,
-  payload: null,
-});
-
-export const initilizeLocations = (locations) => ({
+const initilizeLocations = (locations) => ({
   type: INITILIZE_LOCATIONS,
   payload: locations,
 });
+
+export { loginUser, logoutUser, initilizeLocations };
