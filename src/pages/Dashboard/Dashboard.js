@@ -10,6 +10,7 @@ import CreateUser from "../User/CreateUser";
 import Main from "../../modules/common/components/layout/Main";
 import CreatePost from "../Post/CreatePost";
 import TaskLogDetails from "./TaskLogDetails";
+import ProfilePage from "../Profile/ProfilePage";
 
 const Dashboard = () => {
   return (
@@ -24,6 +25,7 @@ const Dashboard = () => {
           <Route path="/view_tasklog" element={<TaskLogDetails />} />
           <Route path="/create_location" element={<CreateLocation />} />
           <Route path="/create_user" element={<CreateUser />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/create_post" element={<CreatePost />} />
           {/* <Route path="/block" element={<Block />} /> */}
         </Routes>

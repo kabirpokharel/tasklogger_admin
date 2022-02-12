@@ -1,21 +1,14 @@
-import React, { useState } from "react";
-import {
-  Card,
-  Col,
-  Row,
-  Typography,
-  Tooltip,
-  Progress,
-  message,
-  Upload,
-  Button,
-  Timeline,
-  Radio,
-} from "antd";
-import { ToTopOutlined, MenuUnfoldOutlined, RightOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Card, Col, Row, Typography } from "antd";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { RightOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import Paragraph from "antd/lib/typography/Paragraph";
-import card from "../../asstes/images/info-card-1.jpg";
 import cleaner from "../../asstes/images/cleaner.png";
+import Loader from "../../modules/common/components/Loader";
+import baseUrl from "../../modules/common/constant/baseUrl";
+import { getUserDetails, initilizeLocations } from "../../modules/redux/actions";
 const dollor = [
   <svg
     width="22"
@@ -102,40 +95,108 @@ const cart = [
     ></path>
   </svg>,
 ];
-const count = [
-  {
-    today: "Locations",
-    title: "17",
-    persent: "",
-    icon: dollor,
-    bnb: "bnb2",
-  },
-  {
-    today: "Cleaners",
-    title: "4",
-    persent: "",
-    icon: profile,
-    bnb: "bnb2",
-  },
-  {
-    today: "Total blocks",
-    title: "20",
-    persent: "",
-    icon: heart,
-    bnb: "redtext",
-  },
-  {
-    today: "Notification",
-    title: "3",
-    persent: "",
-    icon: cart,
-    bnb: "bnb2",
-  },
-];
+
+const blockCounter = (locations) => {
+  let blockCount = 0;
+  locations.forEach((location) => {
+    blockCount += location.noOfBlocks;
+  });
+  return blockCount;
+};
 
 const DashboardBodyNew = () => {
   const { Title, Text } = Typography;
+  const [loading, setLoading] = useState(!true);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user, allUsers, locations } = cleaningData;
 
+  const count = [
+    {
+      today: "Locations",
+      title: locations.length || "0",
+      persent: "",
+      icon: dollor,
+      bnb: "bnb2",
+    },
+    {
+      today: "Cleaners",
+      title: allUsers.length || "0",
+      persent: "",
+      icon: profile,
+      bnb: "bnb2",
+    },
+    {
+      today: "Total blocks",
+      title: blockCounter(locations) || "0",
+      persent: "",
+      icon: heart,
+      bnb: "redtext",
+    },
+    {
+      today: "Notification",
+      title: "3",
+      persent: "",
+      icon: cart,
+      bnb: "bnb2",
+    },
+  ];
+
+  useEffect(() => {
+    axios
+      .all([
+        axios.get(`${baseUrl}/location/viewAll`, { headers: { user: user.shortid } }),
+        axios.get(`${baseUrl}/getUsersInfo?id=${user.shortid}`, {
+          headers: { user: user.shortid },
+        }),
+      ])
+      .then(
+        axios.spread((locations, userDetails) => {
+          console.log("see the response - -- - - -- - > ", locations.data, userDetails.data);
+          dispatch(initilizeLocations(locations.data.locations));
+          dispatch(getUserDetails(userDetails.data));
+          setLoading(false);
+        })
+      )
+      .catch((error) => {
+        setLoading(false);
+        console.log(error);
+      });
+
+    // axios({
+    //   method: "get",
+    //   headers: { user: user.shortid },
+    //   url: `${baseUrl}/location/viewAll`,
+    // })
+    //   .then((res) => {
+    //     console.log("see this is response from location page", res);
+    //     dispatch(initilizeLocations(res.data.locations));
+    //     setLocations(res.data.locations);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     setLoading(false);
+    //     console.log("see this is an error from locaiton page --------> ", err);
+    //   });
+  }, []);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "300px",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div>
+          <Loader />
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="layout-content">
       <Row className="rowgap-vbox" gutter={[24, 0]}>
@@ -197,8 +258,8 @@ const DashboardBodyNew = () => {
                 <div className="ant-cret text-right">
                   {/* <img src={card} alt="" className="border10" /> */}
                   <img
-                    src={cleaner}
-                    // src={`https://www.alphacleaningsupplies.com.au/wp-content/uploads/2019/05/cleaning-supplies-basket-1-1024x683.jpg`}
+                    // src={cleaner}
+                    src={`https://www.alphacleaningsupplies.com.au/wp-content/uploads/2019/05/cleaning-supplies-basket-1-1024x683.jpg`}
                     alt=""
                     className="border10"
                   />

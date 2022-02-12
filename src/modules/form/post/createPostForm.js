@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { useSelector, useDispatch } from "react-redux";
 import {
   Form,
   Input,
@@ -8,6 +8,7 @@ import {
   Radio,
   Typography,
   DatePicker,
+  Select,
   // Row,
   // Col,
   // Tag,
@@ -15,7 +16,12 @@ import {
 } from "antd";
 import { formatCamelcase, stringCase } from "../../common/utils/stringCase";
 
+const { Option } = Select;
+
 const CreatePostForm = ({ submitPostForm, initialValueProp, actionType }) => {
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { allUsers } = cleaningData;
+
   // const { submitPostForm, initialValueProp } = props;
   console.log("see this is  =---->", initialValueProp);
   // console.log("loading from block form page--- > ", loading);
@@ -78,7 +84,31 @@ const CreatePostForm = ({ submitPostForm, initialValueProp, actionType }) => {
       >
         <Input.TextArea style={{ height: "100px" }} placeholder={`Enter Description`} />
       </Form.Item>
-
+      <Form.Item
+        label={"Send to"}
+        name={"users"}
+        rules={[
+          {
+            required: true,
+            message: `Please select atleast one employee!`,
+          },
+        ]}
+      >
+        <Select
+          mode="tags"
+          // disabled
+          style={{ width: "100%" }}
+          placeholder="Please select"
+          defaultValue={[]}
+          // onChange={(value) => console.log("this is value -- -->", value)}
+        >
+          {allUsers.map((user) => (
+            <Select.Option key={user.shortid} value={user.shortid}>
+              {user.fullName}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.Item
         wrapperCol={{
           offset: 8,

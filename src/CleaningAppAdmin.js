@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from "react-redux";
 import SignIn from "./pages/Login/SignIn";
 
 export const CleaningAppAdmin = () => {
-  // const dispatch = useDispatch();
   const cleaningData = useSelector((state) => state.cleaning);
   console.log("this is cleaning data", cleaningData);
   if (!cleaningData.userLoggedIn) {

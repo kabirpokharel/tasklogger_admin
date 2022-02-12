@@ -12,6 +12,13 @@ const cleanerReducer = (state = initialState, action) => {
     case "INITILIZE_LOCATIONS": {
       return { ...state, locations: payload };
     }
+    case "ALL_USERS": {
+      return {
+        ...state,
+        user: { ...state.user, ...payload.userInfo },
+        allUsers: payload.otherUsersColl,
+      };
+    }
     case "LOGIN_USER": {
       return { ...state, userLoggedIn: true, user: payload };
     }

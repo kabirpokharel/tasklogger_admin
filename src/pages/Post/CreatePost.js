@@ -2,10 +2,7 @@ import React, { useState } from "react";
 // import PropTypes from "prop-types";
 import axios from "axios";
 import { useNavigate, useHistory } from "react-router-dom";
-import {
-  // useSelector,
-  useDispatch,
-} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button, Row, Col, Result, Typography, Card } from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import baseUrl from "../../modules/common/constant/baseUrl";
@@ -14,6 +11,7 @@ import CreateLocationForm from "../../modules/form/locationForm/CreateLocationFo
 import CreateUserForm from "../../modules/form/userForm/CreateUserForm";
 import CardComponent from "../../modules/common/components/CardComponent";
 import CreatePostForm from "../../modules/form/post/createPostForm";
+import Post from "./Post";
 
 const { Paragraph, Text, Title } = Typography;
 const ResultCard = ({ error }) => {
@@ -102,21 +100,21 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
 
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
   const submitPostForm = (values) => {
     console.log("11-12 I have reached here to location action!!!");
     setLoading(true);
-    const { firstName, surname, role, dob, email, password } = values;
-    console.log("see this is values of create location form", values);
+    const { subject, description, users, createdBy } = values;
+    console.log("see this is values of create post form --------------->", values);
     axios({
       method: "post",
-      url: `${baseUrl}/signup`,
+      url: `${baseUrl}/feed/create`,
       data: {
-        firstName,
-        surname,
-        role, //["admin", "editor", "user"]
-        dob, //date
-        email,
-        password,
+        subject,
+        description,
+        users,
+        createdBy: user.shortid,
       },
     })
       .then((res) => {
@@ -138,7 +136,7 @@ const CreatePost = () => {
     <Row justify="center">
       <Col
         xs={{ span: 24 }}
-        lg={{ span: 18 }}
+        lg={{ span: 22 }}
         // style={{ background: "green" }}
       >
         {statusPopup ? (
@@ -167,8 +165,7 @@ const CreatePost = () => {
             </Col>
             <Col xs={24} sm={24} md={12} lg={12} xl={10} className="mb-24">
               <Card bordered={false} className="criclebox h-full">
-                {/* <LineChart /> */}
-                <iframe src="http://expo.dev/notifications"></iframe>
+                <Post />
               </Card>
             </Col>
           </Row>

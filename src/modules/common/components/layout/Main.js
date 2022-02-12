@@ -32,7 +32,7 @@ function Main({ children }) {
   const handleFixedNavbar = (type) => setFixed(type);
 
   let { pathname } = useLocation();
-  pathname = pathname.replace("/", "") || "dashboard";
+  pathname = pathname.replace("/", "").replace(/_/g, " ") || "dashboard";
 
   useEffect(() => {
     if (pathname === "rtl") {
@@ -43,11 +43,7 @@ function Main({ children }) {
   }, [pathname]);
 
   return (
-    <Layout
-      className={`layout-dashboard ${pathname === "profile" ? "layout-profile" : ""} ${
-        pathname === "rtl" ? "layout-dashboard-rtl" : ""
-      }`}
-    >
+    <Layout className={`layout-dashboard `}>
       <Drawer
         title={false}
         placement={placement === "right" ? "left" : "right"}
@@ -56,9 +52,9 @@ function Main({ children }) {
         visible={visible}
         key={placement === "right" ? "left" : "right"}
         width={250}
-        className={`drawer-sidebar ${pathname === "rtl" ? "drawer-sidebar-rtl" : ""} `}
+        className={`drawer-sidebar`}
       >
-        <Layout className={`layout-dashboard ${pathname === "rtl" ? "layout-dashboard-rtl" : ""}`}>
+        <Layout className={`layout-dashboard`}>
           <Sider
             trigger={null}
             width={250}

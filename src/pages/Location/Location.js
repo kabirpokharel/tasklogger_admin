@@ -43,47 +43,47 @@ const SettingIconWrapper = styled.div`
 `;
 
 const Locations = () => {
-  const [loading, setLoading] = useState(true);
-  const [locations, setLocations] = useState([]);
-  const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(true);
+  // const [locations, setLocations] = useState([]);
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const cleaningData = useSelector((state) => state.cleaning);
-  const { user } = cleaningData;
+  const { user, locations } = cleaningData;
   // const handleClick = (locationId) => navigate(`/location_details/${locationId}`);
   const handleClick = (locationId) => navigate(`/location/${locationId}/location_detail`);
-  useEffect(() => {
-    axios({
-      method: "get",
-      headers: { user: user.shortid },
-      url: `${baseUrl}/location/viewAll`,
-    })
-      .then((res) => {
-        console.log("see this is response from location page", res);
-        dispatch(initilizeLocations(res.data.locations));
-        setLocations(res.data.locations);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log("see this is an error from locaiton page --------> ", err);
-      });
-  }, []);
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          height: "300px",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div>
-          <Loader />
-        </div>
-      </div>
-    );
-  }
+  // useEffect(() => {
+  //   axios({
+  //     method: "get",
+  //     headers: { user: user.shortid },
+  //     url: `${baseUrl}/location/viewAll`,
+  //   })
+  //     .then((res) => {
+  //       console.log("see this is response from location page", res);
+  //       dispatch(initilizeLocations(res.data.locations));
+  //       setLocations(res.data.locations);
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setLoading(false);
+  //       console.log("see this is an error from locaiton page --------> ", err);
+  //     });
+  // }, []);
+  // if (loading) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         height: "300px",
+  //         alignItems: "center",
+  //         justifyContent: "center",
+  //       }}
+  //     >
+  //       <div>
+  //         <Loader />
+  //       </div>
+  //     </div>
+  //   );
+  // }
   if (!locations.length) {
     console.log("see this is locations state", locations);
     return <div>No location found, create location first!!!</div>;

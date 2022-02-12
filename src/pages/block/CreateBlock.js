@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Form, Input, Button, Card, Row, Col, Tag, Select, Result, Typography } from "antd";
+import { useSelector, useDispatch } from "react-redux";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import CreateBlockForm from "../../modules/form/blockForm/CreateBlockForm";
 import baseUrl from "../../modules/common/constant/baseUrl";
@@ -101,6 +102,9 @@ const Block = ({
   const [statusPopup, setStatusPopup] = useState(false);
   // const [loading, setCreateBlock_Loding] = useState(false);
   const [error, setError] = useState([]);
+  const cleaningData = useSelector((state) => state.cleaning);
+  const { user } = cleaningData;
+
   const createBlock = (values) => {
     setCreateBlock_Loading(true);
     const { blockName, blockRooms, extras } = values;
@@ -122,6 +126,7 @@ const Block = ({
     console.log("see this is data before updating or creating block");
     axios({
       method: "post",
+      headers: { user: user.shortid },
       url: blockOperation === "create" ? `${baseUrl}/block/create` : `${baseUrl}/block/update`,
       data,
     })

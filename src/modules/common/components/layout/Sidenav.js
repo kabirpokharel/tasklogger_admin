@@ -17,7 +17,6 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../../../asstes/image/logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import { drawerIcons } from "../../../../asstes/svg/drawerIcons";
-import CreatePost from "../../../../pages/Post/CreatePost";
 import {
   BILLING,
   DASHBOARD,
@@ -25,6 +24,8 @@ import {
   CREATE_LOCATION,
   CREATE_USER,
   VIEW_TASKLOG,
+  CREATE_POST,
+  PROFILE,
 } from "../../constant/page";
 import { stringCase } from "../../utils/stringCase";
 import { logoutUser } from "../../../redux/actions";
@@ -160,15 +161,22 @@ function Sidenav({ color }) {
       <path d="M2,0A2,2,0,0,0,0,2V8a2,2,0,0,0,2,2V4A2,2,0,0,1,4,2h6A2,2,0,0,0,8,0Z" fill={color} />
     </svg>,
   ];
-  const sidebarPages = [DASHBOARD, LOCATION, VIEW_TASKLOG, CREATE_LOCATION, CREATE_USER];
-  const NavigationItems = () => {
+  const sidebarPages = [
+    DASHBOARD,
+    LOCATION,
+    VIEW_TASKLOG,
+    CREATE_LOCATION,
+    CREATE_USER,
+    CREATE_POST,
+  ];
+  const NavigationItems = ({ pageArr }) => {
     return (
       <>
-        {sidebarPages.map((p, i) => {
+        {pageArr.map((p, i) => {
           const route = stringCase(p, "lower");
           // console.log("see this is route and look out for billing- -- --- > ", route);
           return (
-            <Menu.Item key={i + 1}>
+            <Menu.Item key={p}>
               <NavLink to={`/${route}`}>
                 <span
                   className="icon"
@@ -178,7 +186,7 @@ function Sidenav({ color }) {
                 >
                   {drawerIcons(route, color)}
                 </span>
-                <span className="label">{stringCase(p, "capitalize")}</span>
+                <span className="label">{stringCase(p, "capitalize").replace(/_/g, " ")}</span>
               </NavLink>
             </Menu.Item>
           );
@@ -194,11 +202,12 @@ function Sidenav({ color }) {
       </div>
       <hr />
       <Menu theme="light" mode="inline">
-        <NavigationItems />
+        <NavigationItems pageArr={sidebarPages} />
         <Menu.Item className="menu-item-header" key="5">
           quick links
         </Menu.Item>
-        <Menu.Item key="6">
+        <NavigationItems pageArr={[PROFILE]} />
+        {/* <Menu.Item key="6">
           <NavLink to="/profile">
             <span
               className="icon"
@@ -210,19 +219,7 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Profile</span>
           </NavLink>
-        </Menu.Item>
-        {/* <Menu.Item key="7">
-          <NavLink to="/sign-in">
-            <span className="icon">{signin}</span>
-            <span className="label">Sign In</span>
-          </NavLink>
         </Menu.Item> */}
-        <Menu.Item key="7">
-          <NavLink to="/create_post">
-            <span className="icon">{post}</span>
-            <span className="label">Post</span>
-          </NavLink>
-        </Menu.Item>
         <li
           class="ant-menu-item ant-menu-item-only-child"
           // role="menuitem"
@@ -237,18 +234,11 @@ function Sidenav({ color }) {
           <span class="ant-menu-title-content">
             <a>
               <span class="icon">{signup}</span>
-              <span class="label">Logo out</span>
+              <span class="label">Log out</span>
             </a>
           </span>
         </li>
-
         {/* .............................................. */}
-        {/* <Menu.Item key="8">
-          <NavLink to="/sign-up">
-            <span className="icon">{signup}</span>
-            <span className="label">Logo out</span>
-          </NavLink>
-        </Menu.Item> */}
       </Menu>
       <div className="aside-footer">
         <div

@@ -134,11 +134,11 @@ const CreateBlockForm = (props) => {
               {blockOperation === "edit" ? "Edit" : "Add"}
             </Button>
           </Col>
-          <Col offset={4} span={4}>
+          {/* <Col offset={4} span={4}>
             <Button loading={loading} onClick={() => form.resetFields()} danger>
               Delete
             </Button>
-          </Col>
+          </Col> */}
         </Row>
       </Form.Item>
     </Form>

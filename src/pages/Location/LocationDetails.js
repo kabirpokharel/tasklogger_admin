@@ -214,9 +214,9 @@ const LocationDetails = (props) => {
               <Button type="primary" onClick={() => setModalVisible_editLocation(true)}>
                 Edit
               </Button>
-              <Button onClick={() => deleteLocation(location_id)} danger>
+              {/* <Button onClick={() => deleteLocation(location_id)} danger>
                 Delete
-              </Button>
+              </Button> */}
             </Space>
           )}
         />
