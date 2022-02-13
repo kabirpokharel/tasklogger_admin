@@ -11,6 +11,7 @@ import Main from "../../modules/common/components/layout/Main";
 import CreatePost from "../Post/CreatePost";
 import TaskLogDetails from "./TaskLogDetails";
 import ProfilePage from "../Profile/ProfilePage";
+import GenerateReport from "../TasklogReport/GenerateReport";
 
 const Dashboard = () => {
   return (
@@ -27,6 +28,8 @@ const Dashboard = () => {
           <Route path="/create_user" element={<CreateUser />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/create_post" element={<CreatePost />} />
+          <Route path="/generate_report" element={<GenerateReport />} />
+
           {/* <Route path="/block" element={<Block />} /> */}
         </Routes>
       </Main>

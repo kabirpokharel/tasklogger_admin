@@ -26,6 +26,7 @@ import {
   VIEW_TASKLOG,
   CREATE_POST,
   PROFILE,
+  GENERATE_REPORT,
 } from "../../constant/page";
 import { stringCase } from "../../utils/stringCase";
 import { logoutUser } from "../../../redux/actions";
@@ -168,6 +169,7 @@ function Sidenav({ color }) {
     CREATE_LOCATION,
     CREATE_USER,
     CREATE_POST,
+    GENERATE_REPORT,
   ];
   const NavigationItems = ({ pageArr }) => {
     return (

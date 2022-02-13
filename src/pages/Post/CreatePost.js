@@ -10,7 +10,7 @@ import { initilizeLocations } from "../../modules/redux/actions";
 import CreateLocationForm from "../../modules/form/locationForm/CreateLocationForm";
 import CreateUserForm from "../../modules/form/userForm/CreateUserForm";
 import CardComponent from "../../modules/common/components/CardComponent";
-import CreatePostForm from "../../modules/form/post/createPostForm";
+import CreatePostForm from "../../modules/form/post/CreatePostForm";
 import Post from "./Post";
 
 const { Paragraph, Text, Title } = Typography;

@@ -12,8 +12,8 @@ const drawerIcons = (title, color) => {
       return createLocation(color);
     case "create_post":
       return createPost(color);
-    case "rtl":
-      return rtl(color);
+    case "generate_report":
+      return generateReport(color);
     case "profile":
       return profile(color);
     case "signin":
@@ -87,7 +87,7 @@ const dashboard = (color) => [
     ></path>
   </svg>,
 ];
-const createPost = (color) => [
+const generateReport = (color) => [
   <svg
     width="20"
     height="20"
@@ -164,7 +164,7 @@ const createUser = (color) => [
     />
   </svg>,
 ];
-const rtl = (color) => [
+const createPost = (color) => [
   <svg
     width="20"
     height="20"
@@ -229,4 +229,14 @@ const signup = (color) => [
   </svg>,
 ];
 
-export { drawerIcons, dashboard, tables, billing, rtl, profile, signin, signup, createPost };
+export {
+  drawerIcons,
+  dashboard,
+  tables,
+  billing,
+  generateReport,
+  profile,
+  signin,
+  signup,
+  createPost,
+};
