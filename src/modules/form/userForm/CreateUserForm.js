@@ -41,21 +41,23 @@ const CreateUserForm = ({ submitUserForm, initialValueProp, actionType }) => {
   return (
     <Form
       name="createUserForm"
-      initialValues={{
-        // firstName: initialValueProp.firstName,
-        // surname: initialValueProp.surname,
-        // role: initialValueProp.role, //["admin", "editor", "user"]
-        // dob: initialValueProp.dob, //date
-        // email: initialValueProp.email,
-        // password: initialValueProp.password,
-        // ###################################################### V
-        firstName: "",
-        surname: "",
-        role: "admin", //["admin", "editor", "user"]
-        dob: initialValueProp.dob, //date
-        email: "kabirpokharel12@gmail.com",
-        password: "admin123",
-      }}
+      initialValues={
+        {
+          // firstName: initialValueProp.firstName,
+          // surname: initialValueProp.surname,
+          // role: initialValueProp.role, //["admin", "editor", "user"]
+          // dob: initialValueProp.dob, //date
+          // email: initialValueProp.email,
+          // password: initialValueProp.password,
+          // ###################################################### V
+          // firstName: "",
+          // surname: "",
+          // role: "", //["admin", "editor", "user"]
+          // dob: initialValueProp.dob, //date
+          // email: "",
+          // password: "",
+        }
+      }
       labelCol={{
         span: 8,
       }}

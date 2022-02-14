@@ -14,7 +14,8 @@ import CreatePostForm from "../../modules/form/post/CreatePostForm";
 import Post from "./Post";
 
 const { Paragraph, Text, Title } = Typography;
-const ResultCard = ({ error }) => {
+
+const ResultCard = ({ error, navigate }) => {
   // let navigate = useNavigate();
   console.log("this is type of the error ", typeof error);
   console.log("this is type of the error ", error);
@@ -22,14 +23,7 @@ const ResultCard = ({ error }) => {
   //   "see this is an error for result card   error[0].response.message -- -- > ",
   //   error[0].response.message
   // );
-  console.log(
-    "see this is an error for result card   error[0].response.status -- -- > ",
-    error[0].response?.status || "error[0].response.status --> undefined"
-  );
-  console.log(
-    "see this is an error for result card  error[0].response.data -- -- > ",
-    error[0].response?.data || "error[0].response?.data == => undefined"
-  );
+
   if (error.length) {
     return (
       <Result
@@ -56,12 +50,12 @@ const ResultCard = ({ error }) => {
               The content you submitted has the following error:
             </Text>
           </Paragraph>
-          {error.map((err, id) => (
-            <Paragraph key={id}>
-              <CloseCircleOutlined className="site-result-demo-error-icon" />
-              <span style={{ marginLeft: "0.5rem" }}>{err.response.data.message}</span>
-            </Paragraph>
-          ))}
+          {/* {error.map((err, id) => ( */}
+          <Paragraph>
+            <CloseCircleOutlined className="site-result-demo-error-icon" />
+            <span style={{ marginLeft: "0.5rem" }}>{"Error"}</span>
+          </Paragraph>
+          {/* ))} */}
         </div>
       </Result>
     );
@@ -76,10 +70,10 @@ const ResultCard = ({ error }) => {
             type="primary"
             key="console"
             onClick={() => {
-              alert("redirect to post page");
+              // alert("redirect to post page");
               // setStatusPopup(false);
               // window.location.reload(false);
-              // navigate(`/location/${locationId}/location_detail`);
+              navigate(`/create_post`);
               // history.push({
               //   pathname: `/location_details/${locationId}`,
               // });
@@ -87,35 +81,42 @@ const ResultCard = ({ error }) => {
           >
             Done
           </Button>,
-          <Button key="buy" onClick={() => alert("redirect page to block menu")}>
-            Cancel
-          </Button>,
+          // <Button key="buy" onClick={() => alert("redirect page to block menu")}>
+          //   Cancel
+          // </Button>,
         ]}
       />
     );
   }
 };
 const CreatePost = () => {
+  let navigate = useNavigate();
   const [statusPopup, setStatusPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
 
   const cleaningData = useSelector((state) => state.cleaning);
   const { user } = cleaningData;
+  console.log("see user - -- >", user);
   const submitPostForm = (values) => {
-    console.log("11-12 I have reached here to location action!!!");
+    alert("I am here");
+    console.log("values-- -- --> ", values);
     setLoading(true);
     const { subject, description, users, createdBy } = values;
     console.log("see this is values of create post form --------------->", values);
+    const data = {
+      subject,
+      description,
+      users,
+      createdBy: user.shortid,
+    };
+    console.log("this is post data -- --- >", data);
+
     axios({
       method: "post",
+      headers: { user: user.shortid },
       url: `${baseUrl}/feed/create`,
-      data: {
-        subject,
-        description,
-        users,
-        createdBy: user.shortid,
-      },
+      data,
     })
       .then((res) => {
         console.log("see this is response from create user", res);
@@ -140,7 +141,7 @@ const CreatePost = () => {
         // style={{ background: "green" }}
       >
         {statusPopup ? (
-          <ResultCard error={error} setStatusPopup={setStatusPopup} />
+          <ResultCard error={error} navigate={navigate} setStatusPopup={setStatusPopup} />
         ) : (
           // <CardComponent
           //   bordered={false}
